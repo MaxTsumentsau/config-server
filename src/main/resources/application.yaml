@@ -1,3 +1,37 @@
+server:
+  port: 8888
+
 spring:
   application:
     name: config-server
+  config:
+    import:
+      - application-secret.yml
+  cloud:
+    stream:
+      defaultBinder: rabbit
+      bindings:
+        springCloudBusInput:
+          destination: springCloudBus
+        springCloudBusOutput:
+          destination: springCloudBus
+    config:
+      server:
+        git:
+          uri: https://github.com/MaxTsumentsau/config-server.git
+          default-label: develop
+          clone-on-start: true
+    bus:
+      enabled: true
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: ${RABBIT_USER}
+    password: ${RABBIT_PASSWORD}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
