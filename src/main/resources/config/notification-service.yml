@@ -1,5 +1,8 @@
+server:
+  port: 8081
+
 app:
-  from: ${vault:secret/notification-service:MAIL_USERNAME}
+  from: ${MAIL_USERNAME}
   kafka:
     topic: user-events
     group-id: notification-service
@@ -19,9 +22,9 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.yaml
     enabled: true
   datasource:
-    url: ${vault:secret/notification-service:DB_URL}
-    username: ${vault:secret/notification-service:DB_USERNAME}
-    password: ${vault:secret/notification-service:DB_PASSWORD}
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -46,11 +49,11 @@ spring:
       type: single
       ack-mode: record
   mail:
-    host: ${vault:secret/notification-service:MAIL_HOST}
+    host: ${MAIL_HOST}
     port: 465
     protocol: smtps
-    username: ${vault:secret/notification-service:MAIL_USERNAME}
-    password: ${vault:secret/notification-service:MAIL_PASSWORD}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
     properties:
       mail.smtp.auth: true
       mail.smtp.ssl.enable: true
@@ -63,3 +66,10 @@ logging:
     liquibase: DEBUG
     org.springframework.boot.autoconfigure.liquibase: DEBUG
     org.springframework.jdbc: DEBUG
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
