@@ -14,7 +14,7 @@ spring:
       port: 8200
       scheme: http
       token: ${VAULT_TOKEN}
-      backend: secret
+      backend: kv
       kv-version: 2
 
     config:
@@ -29,7 +29,7 @@ spring:
           host: localhost
           port: 8200
           scheme: http
-          backend: secret
+          backend: kv
           kv-version: 2
           profile-separator: "/"
 
