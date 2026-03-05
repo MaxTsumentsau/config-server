@@ -1,8 +1,8 @@
 server:
   port: 8080
 spring:
-  aop:
-    proxy-target-class: false
+  jmx:
+    enabled: true
   application:
     name: user-service
   web:
@@ -51,7 +51,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: health,info,metrics,refresh,busrefresh
 
 eureka:
   client:
