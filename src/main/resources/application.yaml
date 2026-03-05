@@ -9,6 +9,8 @@ spring:
     active: git,vault
 
   cloud:
+    bus:
+      enabled: true
     vault:
       host: localhost
       port: 8200
@@ -30,6 +32,7 @@ spring:
           port: 8200
           scheme: http
           backend: kv
+          token: ${VAULT_TOKEN}
           kv-version: 2
           profile-separator: "/"
 
@@ -46,4 +49,4 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: health,info,metrics,refresh,busrefresh
