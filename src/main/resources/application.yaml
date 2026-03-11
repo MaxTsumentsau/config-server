@@ -23,7 +23,7 @@ spring:
       server:
         git:
           uri: https://github.com/MaxTsumentsau/config-server.git
-          default-label: feature/transition-to-cubernetes #don't forget to change it later
+          default-label: develop
           search-paths: src/main/resources/config
           clone-on-start: true
 

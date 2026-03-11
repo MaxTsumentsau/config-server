@@ -8,12 +8,20 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBIT_USER}
       RABBITMQ_DEFAULT_PASS: ${RABBIT_PASSWORD}
+      TZ: Europe/Minsk
+    healthcheck:
+      test: [ "CMD", "rabbitmq-diagnostics", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
 
+  #запускать до docker-compose up вручную и unseal его
   vault:
     image: hashicorp/vault:1.13.3
     container_name: vault
-    restart: unless-stopped
+    restart: "no"
     cap_add:
       - IPC_LOCK
     command: vault server -config=/vault/config/vault.hcl
@@ -22,6 +30,12 @@ services:
     volumes:
       - ./vault/config/vault.hcl:/vault/config/vault.hcl:ro
       - ./data:/vault/data
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:8200/v1/sys/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
 
   config-server:
@@ -30,12 +44,21 @@ services:
     ports:
       - "8888:8888"
     depends_on:
-      - rabbitmq
-      - vault
+      rabbitmq:
+        condition: service_healthy
+      vault:
+        condition: service_healthy
     environment:
       RABBIT_USER: ${RABBIT_USER}
       RABBIT_PASSWORD: ${RABBIT_PASSWORD}
       VAULT_TOKEN: ${VAULT_TOKEN}
+      TZ: Europe/Minsk
+    healthcheck:
+      test: [ "CMD", "wget", "--spider", "-q", "http://localhost:8888/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
 
 
   service-discovery:
@@ -44,12 +67,21 @@ services:
     ports:
       - "8761:8761"
     depends_on:
-      - rabbitmq
-      - config-server
+      rabbitmq:
+        condition: service_healthy
+      config-server:
+        condition: service_healthy
     environment:
       RABBIT_USER: ${RABBIT_USER}
       RABBIT_PASSWORD: ${RABBIT_PASSWORD}
       CONFIG-TOKEN: ${CONFIG-TOKEN}
+      TZ: Europe/Minsk
+    healthcheck:
+      test: [ "CMD", "wget", "--spider", "-q", "http://localhost:8761/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
 
 
   gateway-service:
@@ -58,12 +90,23 @@ services:
     ports:
       - "8082:8082"
     depends_on:
-      - rabbitmq
-      - config-server
+      rabbitmq:
+        condition: service_healthy
+      config-server:
+        condition: service_healthy
+      service-discovery:
+        condition: service_healthy
     environment:
       RABBIT_USER: ${RABBIT_USER}
       RABBIT_PASSWORD: ${RABBIT_PASSWORD}
       CONFIG-TOKEN: ${CONFIG-TOKEN}
+      TZ: Europe/Minsk
+    healthcheck:
+      test: [ "CMD", "wget", "--spider", "-q", "http://localhost:8082/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
 
 
   postgres-notification-service:
@@ -72,8 +115,15 @@ services:
       POSTGRES_DB: ${NOTIFICATION_DB_NAME}
       POSTGRES_USER: ${NOTIFICATION_DB_USERNAME}
       POSTGRES_PASSWORD: ${NOTIFICATION_DB_PASSWORD}
+      TZ: Europe/Minsk
     ports:
       - "${NOTIFICATION_DB_PORT}:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${NOTIFICATION_DB_USERNAME} -d ${NOTIFICATION_DB_NAME}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
 
   notification-service:
@@ -82,14 +132,31 @@ services:
     ports:
       - "8081:8081"
     depends_on:
-      - rabbitmq
-      - config-server
-      - postgres-notification-service
-      - gateway-service
+      rabbitmq:
+        condition: service_healthy
+      config-server:
+        condition: service_healthy
+      postgres-notification-service:
+        condition: service_healthy
+      gateway-service:
+        condition: service_healthy
+      service-discovery:
+        condition: service_healthy
+      kafka-1:
+        condition: service_started
+      kafka-2:
+        condition: service_started
     environment:
       RABBIT_USER: ${RABBIT_USER}
       RABBIT_PASSWORD: ${RABBIT_PASSWORD}
       CONFIG-TOKEN: ${CONFIG-TOKEN}
+      TZ: Europe/Minsk
+    healthcheck:
+      test: [ "CMD", "wget", "--spider", "-q", "http://localhost:8081/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
 
 
   postgres-user-service:
@@ -98,8 +165,15 @@ services:
       POSTGRES_DB: ${USER_DB_NAME}
       POSTGRES_USER: ${USER_DB_USERNAME}
       POSTGRES_PASSWORD: ${USER_DB_PASSWORD}
+      TZ: Europe/Minsk
     ports:
       - "${USER_DB_PORT}:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${USER_DB_USERNAME} -d ${USER_DB_NAME}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
 
   user-service:
@@ -107,16 +181,31 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - rabbitmq
-      - config-server
-      - gateway-service
-      - postgres-user-service
+      rabbitmq:
+        condition: service_healthy
+      config-server:
+        condition: service_healthy
+      postgres-user-service:
+        condition: service_healthy
+      gateway-service:
+        condition: service_healthy
+      service-discovery:
+        condition: service_healthy
+      kafka-1:
+        condition: service_started
+      kafka-2:
+        condition: service_started
     environment:
       RABBIT_USER: ${RABBIT_USER}
       RABBIT_PASSWORD: ${RABBIT_PASSWORD}
       CONFIG-TOKEN: ${CONFIG-TOKEN}
-      environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-user-service:5432/users
+      TZ: Europe/Minsk
+    healthcheck:
+      test: [ "CMD", "wget", "--spider", "-q", "http://localhost:8080/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
 
   kafka-1:
     image: bitnami/kafka:3.4.0
@@ -131,8 +220,17 @@ services:
       - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka-1:9092
       - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=false
       - ALLOW_PLAINTEXT_LISTENER=yes
+      - TZ=Europe/Minsk
     ports:
       - "19092:9092"
+    healthcheck:
+      test: [ "CMD-SHELL", "kafka-topics.sh --bootstrap-server kafka-1:9092 --list || \
+       kafka-topics.sh --bootstrap-server localhost:9092 --list" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
 
   kafka-2:
     image: bitnami/kafka:3.4.0
@@ -147,5 +245,13 @@ services:
       - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka-2:9092
       - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=false
       - ALLOW_PLAINTEXT_LISTENER=yes
+      - TZ=Europe/Minsk
     ports:
       - "29092:9092"
+    healthcheck:
+      test: [ "CMD-SHELL", "kafka-topics.sh --bootstrap-server kafka-2:9092 --list || \
+      kafka-topics.sh --bootstrap-server localhost:9092 --list" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
