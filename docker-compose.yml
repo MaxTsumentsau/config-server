@@ -23,6 +23,7 @@ services:
       - ./vault/config/vault.hcl:/vault/config/vault.hcl:ro
       - ./data:/vault/data
 
+
   config-server:
     image: max2ba/config-server:latest
     container_name: config-server
@@ -36,6 +37,7 @@ services:
       RABBIT_PASSWORD: ${RABBIT_PASSWORD}
       VAULT_TOKEN: ${VAULT_TOKEN}
 
+
   service-discovery:
     image: max2ba/service-discovery:latest
     container_name: service-discovery
@@ -48,6 +50,7 @@ services:
       RABBIT_USER: ${RABBIT_USER}
       RABBIT_PASSWORD: ${RABBIT_PASSWORD}
       CONFIG-TOKEN: ${CONFIG-TOKEN}
+
 
   gateway-service:
     image: max2ba/gateway-service
@@ -72,6 +75,7 @@ services:
     ports:
       - "${NOTIFICATION_DB_PORT}:5432"
 
+
   notification-service:
     image: max2ba/notification-service
     container_name: notification-service
@@ -86,13 +90,7 @@ services:
       RABBIT_USER: ${RABBIT_USER}
       RABBIT_PASSWORD: ${RABBIT_PASSWORD}
       CONFIG-TOKEN: ${CONFIG-TOKEN}
-      MAIL_HOST: ${MAIL_HOST}
-      MAIL_USERNAME: ${MAIL_USERNAME}
-      MAIL_PASSWORD: ${MAIL_PASSWORD}
-      DB_USERNAME: ${NOTIFICATION_DB_USERNAME}
-      DB_PASSWORD: ${NOTIFICATION_DB_PASSWORD}
-      DB_NAME: ${NOTIFICATION_DB_NAME}
-      DB_PORT: ${NOTIFICATION_DB_PORT}
+
 
   postgres-user-service:
     image: postgres:18.1-alpine3.23
@@ -102,6 +100,7 @@ services:
       POSTGRES_PASSWORD: ${USER_DB_PASSWORD}
     ports:
       - "${USER_DB_PORT}:5432"
+
 
   user-service:
     image: max2ba/user-service
@@ -116,11 +115,8 @@ services:
       RABBIT_USER: ${RABBIT_USER}
       RABBIT_PASSWORD: ${RABBIT_PASSWORD}
       CONFIG-TOKEN: ${CONFIG-TOKEN}
-      DB_USERNAME: ${USER_DB_USERNAME}
-      DB_PASSWORD: ${USER_DB_PASSWORD}
-      DB_NAME: ${USER_DB_NAME}
-      DB_URL: ${USER_DB_URL}
-      DB_PORT: ${USER_DB_PORT}
+      environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-user-service:5432/users
 
   kafka-1:
     image: bitnami/kafka:3.4.0
@@ -137,8 +133,6 @@ services:
       - ALLOW_PLAINTEXT_LISTENER=yes
     ports:
       - "19092:9092"
-    networks:
-      - microservices
 
   kafka-2:
     image: bitnami/kafka:3.4.0
@@ -155,9 +149,3 @@ services:
       - ALLOW_PLAINTEXT_LISTENER=yes
     ports:
       - "29092:9092"
-    networks:
-      - microservices
-
-networks:
-  microservices:
-    driver: bridge

@@ -67,7 +67,6 @@ logging:
   level:
     liquibase: DEBUG
     org.springframework.boot.autoconfigure.liquibase: DEBUG
-    org.springframework.jdbc: DEBUG
 
 eureka:
   client:
