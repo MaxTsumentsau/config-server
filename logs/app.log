@@ -1,0 +1,59 @@
+2026-03-01 14:03:37 WARN  [Thread-3] org.springframework.cloud.config.server.environment.MultipleJGitEnvironmentRepository - Failed to delete temporary directory on exit: java.nio.file.AccessDeniedException: C:\Users\2BA\AppData\Local\Temp\config-repo-1049309038791633644\.git\objects\pack\pack-8bcc912676d236e742d5e762584adf6e9a678445.idx
+2026-03-01 14:03:37 INFO  [SpringApplicationShutdownHook] org.springframework.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-03-01 14:03:38 INFO  [tomcat-shutdown] org.springframework.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-03-01 14:03:38 INFO  [SpringApplicationShutdownHook] org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer - Waiting for workers to finish.
+2026-03-01 14:03:38 INFO  [SpringApplicationShutdownHook] org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer - Successfully waited for workers to finish.
+2026-03-01 14:03:38 INFO  [SpringApplicationShutdownHook] org.springframework.integration.amqp.inbound.AmqpInboundChannelAdapter - stopped bean 'inbound.springCloudBus.anonymous.XPdVoqxBT5G-HX4-5Lf8-Q'
+2026-03-01 14:03:38 INFO  [SpringApplicationShutdownHook] org.springframework.boot.integration.autoconfigure.IntegrationAutoConfiguration$IntegrationJmxConfiguration$1 - Registering MessageChannel rabbit-1670210122.springCloudBusInput.errors
+2026-03-01 14:03:38 INFO  [SpringApplicationShutdownHook] org.springframework.cloud.stream.binder.BinderErrorChannel - Channel 'config-server.rabbit-1670210122.springCloudBusInput.errors' has 1 subscriber(s).
+2026-03-01 14:03:38 INFO  [SpringApplicationShutdownHook] org.springframework.cloud.stream.binder.BinderErrorChannel - Channel 'config-server.rabbit-1670210122.springCloudBusInput.errors' has 0 subscriber(s).
+2026-03-01 14:03:38 INFO  [SpringApplicationShutdownHook] org.springframework.integration.endpoint.EventDrivenConsumer - Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-03-01 14:03:38 INFO  [SpringApplicationShutdownHook] org.springframework.integration.channel.PublishSubscribeChannel - Channel 'config-server.errorChannel' has 0 subscriber(s).
+2026-03-01 14:03:38 INFO  [SpringApplicationShutdownHook] org.springframework.integration.endpoint.EventDrivenConsumer - stopped bean '_org.springframework.integration.errorLogger'
+2026-03-01 14:15:29 INFO  [main] com.max2ba.config_server.ConfigServerApplication - Starting ConfigServerApplication using Java 21.0.7 with PID 22436 (D:\JavaProjects\config-server\build\classes\java\main started by 2BA in D:\JavaProjects\config-server)
+2026-03-01 14:15:29 INFO  [main] com.max2ba.config_server.ConfigServerApplication - No active profile set, falling back to 1 default profile: "default"
+2026-03-01 14:15:30 INFO  [background-preinit] org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 9.0.1.Final
+2026-03-01 14:15:32 INFO  [main] org.springframework.integration.config.DefaultConfiguringBeanFactoryPostProcessor - No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2026-03-01 14:15:32 INFO  [main] org.springframework.integration.config.DefaultConfiguringBeanFactoryPostProcessor - No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2026-03-01 14:15:32 INFO  [main] org.springframework.cloud.context.scope.GenericScope - BeanFactory id=eeae3a60-e562-382a-8e63-54b703100465
+2026-03-01 14:15:33 INFO  [main] org.springframework.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8888 (http)
+2026-03-01 14:15:33 INFO  [main] org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8888"]
+2026-03-01 14:15:33 INFO  [main] org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2026-03-01 14:15:33 INFO  [main] org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-03-01 14:15:33 INFO  [main] org.springframework.boot.web.context.servlet.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 3737 ms
+2026-03-01 14:15:40 INFO  [main] org.springframework.cloud.stream.messaging.DirectWithAttributesChannel - Channel 'config-server.springCloudBusInput' has 1 subscriber(s).
+2026-03-01 14:15:40 INFO  [main] org.springframework.boot.integration.autoconfigure.IntegrationAutoConfiguration$IntegrationJmxConfiguration$1 - Registering MessageChannel errorChannel
+2026-03-01 14:15:40 INFO  [main] org.springframework.boot.integration.autoconfigure.IntegrationAutoConfiguration$IntegrationJmxConfiguration$1 - Registering MessageChannel springCloudBusInput
+2026-03-01 14:15:41 INFO  [main] org.springframework.boot.integration.autoconfigure.IntegrationAutoConfiguration$IntegrationJmxConfiguration$1 - Registering MessageChannel nullChannel
+2026-03-01 14:15:41 INFO  [main] org.springframework.boot.integration.autoconfigure.IntegrationAutoConfiguration$IntegrationJmxConfiguration$1 - Registering MessageHandler _org.springframework.integration.errorLogger
+2026-03-01 14:15:41 INFO  [main] org.springframework.integration.endpoint.EventDrivenConsumer - Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-03-01 14:15:41 INFO  [main] org.springframework.integration.channel.PublishSubscribeChannel - Channel 'config-server.errorChannel' has 1 subscriber(s).
+2026-03-01 14:15:41 INFO  [main] org.springframework.integration.endpoint.EventDrivenConsumer - started bean '_org.springframework.integration.errorLogger'
+2026-03-01 14:15:41 INFO  [main] org.springframework.cloud.stream.binder.DefaultBinderFactory - Creating binder: rabbit
+2026-03-01 14:15:41 INFO  [main] org.springframework.cloud.stream.binder.DefaultBinderFactory - Constructing binder child context for rabbit
+2026-03-01 14:15:41 INFO  [main] org.springframework.cloud.stream.binder.DefaultBinderFactory - Caching the binder: rabbit
+2026-03-01 14:15:41 INFO  [main] org.springframework.cloud.stream.binder.rabbit.provisioning.RabbitExchangeQueueProvisioner - declaring queue for inbound: springCloudBus.anonymous.uDb_VXlpSPOSW0IL07D6LA, bound to: springCloudBus
+2026-03-01 14:15:41 INFO  [main] org.springframework.amqp.rabbit.connection.CachingConnectionFactory - Attempting to connect to: [localhost:5672]
+2026-03-01 14:15:41 INFO  [main] org.springframework.amqp.rabbit.connection.CachingConnectionFactory - Created new connection: rabbitConnectionFactory#75d97e18:0/SimpleConnection@6d035815 [delegate=amqp://admin@127.0.0.1:5672/, localPort=64147]
+2026-03-01 14:15:41 INFO  [main] org.springframework.cloud.stream.binder.BinderErrorChannel - Channel 'rabbit-1059781259.springCloudBusInput.errors' has 1 subscriber(s).
+2026-03-01 14:15:41 INFO  [main] org.springframework.cloud.stream.binder.BinderErrorChannel - Channel 'rabbit-1059781259.springCloudBusInput.errors' has 2 subscriber(s).
+2026-03-01 14:15:41 INFO  [main] org.springframework.integration.amqp.inbound.AmqpInboundChannelAdapter - started bean 'inbound.springCloudBus.anonymous.uDb_VXlpSPOSW0IL07D6LA'
+2026-03-01 14:15:41 INFO  [main] org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8888"]
+2026-03-01 14:15:41 INFO  [main] org.springframework.boot.tomcat.TomcatWebServer - Tomcat started on port 8888 (http) with context path '/'
+2026-03-01 14:15:42 INFO  [main] com.max2ba.config_server.ConfigServerApplication - Started ConfigServerApplication in 14.359 seconds (process running for 16.69)
+2026-03-01 14:16:15 INFO  [http-nio-8888-exec-1] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-03-01 14:16:15 INFO  [http-nio-8888-exec-1] org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-03-01 14:16:15 INFO  [http-nio-8888-exec-1] org.springframework.web.servlet.DispatcherServlet - Completed initialization in 4 ms
+2026-03-01 14:16:16 INFO  [http-nio-8888-exec-1] org.springframework.cloud.config.server.environment.NativeEnvironmentRepository - Adding property source: Config resource 'file [C:\Users\2BA\AppData\Local\Temp\config-repo-1270836522884373882\src\main\resources\config\notification-service.yml]' via location 'file:/C:/Users/2BA/AppData/Local/Temp/config-repo-1270836522884373882/src/main/resources/config/'
+2026-03-01 14:17:14 INFO  [SpringApplicationShutdownHook] org.springframework.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-03-01 14:17:14 WARN  [Thread-3] org.springframework.cloud.config.server.environment.MultipleJGitEnvironmentRepository - Failed to delete temporary directory on exit: java.nio.file.AccessDeniedException: C:\Users\2BA\AppData\Local\Temp\config-repo-1270836522884373882\.git\objects\pack\pack-8bcc912676d236e742d5e762584adf6e9a678445.idx
+2026-03-01 14:17:14 INFO  [tomcat-shutdown] org.springframework.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-03-01 14:17:14 INFO  [SpringApplicationShutdownHook] org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer - Waiting for workers to finish.
+2026-03-01 14:17:14 INFO  [SpringApplicationShutdownHook] org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer - Successfully waited for workers to finish.
+2026-03-01 14:17:14 INFO  [SpringApplicationShutdownHook] org.springframework.integration.amqp.inbound.AmqpInboundChannelAdapter - stopped bean 'inbound.springCloudBus.anonymous.uDb_VXlpSPOSW0IL07D6LA'
+2026-03-01 14:17:14 INFO  [SpringApplicationShutdownHook] org.springframework.boot.integration.autoconfigure.IntegrationAutoConfiguration$IntegrationJmxConfiguration$1 - Registering MessageChannel rabbit-1059781259.springCloudBusInput.errors
+2026-03-01 14:17:14 INFO  [SpringApplicationShutdownHook] org.springframework.cloud.stream.binder.BinderErrorChannel - Channel 'config-server.rabbit-1059781259.springCloudBusInput.errors' has 1 subscriber(s).
+2026-03-01 14:17:14 INFO  [SpringApplicationShutdownHook] org.springframework.cloud.stream.binder.BinderErrorChannel - Channel 'config-server.rabbit-1059781259.springCloudBusInput.errors' has 0 subscriber(s).
+2026-03-01 14:17:14 INFO  [SpringApplicationShutdownHook] org.springframework.integration.endpoint.EventDrivenConsumer - Removing {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2026-03-01 14:17:14 INFO  [SpringApplicationShutdownHook] org.springframework.integration.channel.PublishSubscribeChannel - Channel 'config-server.errorChannel' has 0 subscriber(s).
+2026-03-01 14:17:14 INFO  [SpringApplicationShutdownHook] org.springframework.integration.endpoint.EventDrivenConsumer - stopped bean '_org.springframework.integration.errorLogger'

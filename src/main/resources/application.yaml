@@ -1,3 +1,52 @@
+server:
+  port: 8888
+
 spring:
   application:
     name: config-server
+
+  profiles:
+    active: git,vault
+
+  cloud:
+    bus:
+      enabled: true
+    vault:
+      host: vault
+      port: 8200
+      scheme: http
+      token: ${VAULT_TOKEN}
+      backend: kv
+      kv-version: 2
+
+    config:
+      server:
+        git:
+          uri: https://github.com/MaxTsumentsau/config-server.git
+          default-label: develop
+          search-paths: src/main/resources/config
+          clone-on-start: true
+
+        vault:
+          host: vault
+          port: 8200
+          scheme: http
+          backend: kv
+          token: ${VAULT_TOKEN}
+          kv-version: 2
+          profile-separator: "/"
+
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: ${RABBIT_USER}
+    password: ${RABBIT_PASSWORD}
+  config:
+    import:
+      - application-secret.yml
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,refresh,busrefresh
